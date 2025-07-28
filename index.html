@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="id">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Selamat Ulang Tahun, Isyana!
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Open+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: "Open Sans", sans-serif;
+      /* BARU: Menambahkan gambar latar belakang */
+      background-image: url(gambar.jpg); /* URL gambar Anda */
+      background-size: cover; /* Gambar akan menutupi seluruh latar belakang */
+      background-position: center; /* Memposisikan gambar di tengah */
+      background-repeat: no-repeat; /* Mencegah gambar berulang */
+      background-attachment: fixed; /* Gambar tetap saat scroll */
+    }
+    .font-pacifico {
+      font-family: "Pacifico", cursive;
+    }
+    /* Card 3D flip */
+    .preserve-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+    /* Confetti base */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0;
+      animation-fill-mode: forwards;
+      pointer-events: none;
+      z-index: 50;
+    }
+    /* Confetti colors */
+    .confetti-yellow {
+      background-color: #ffeb3b;
+    }
+    .confetti-red {
+      background-color: #f44336;
+    }
+    .confetti-blue {
+      background-color: #2196f3;
+    }
+    .confetti-green {
+      background-color: #4caf50;
+    }
+    .confetti-purple {
+      background-color: #9c27b0;
+    }
+    /* Confetti fall animation */
+    @keyframes confetti-fall {
+      0% {
+        transform: translate(var(--start-x, 0), var(--start-y, 0)) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--end-x, 0), var(--end-y, 100vh)) rotate(720deg);
+        opacity: 0.8;
+      }
+    }
+  </style>
+ </head>
+ <body class="min-h-screen flex items-center justify-center overflow-hidden relative px-4">
+  <main aria-label="Kartu Ucapan Ulang Tahun untuk Isyana" class="w-[380px] sm:w-[450px] h-[500px] sm:h-[600px] perspective-[1200px]">
+   <section aria-label="Kartu ulang tahun, klik untuk membuka" aria-pressed="false" class="relative w-full h-full rounded-3xl shadow-2xl bg-white cursor-pointer preserve-3d transition-transform duration-700 ease-in-out will-change-transform focus:outline-none focus:ring-4 focus:ring-pink-400" id="birthdayCard" role="button" tabindex="0">
+    <article class="absolute w-full h-full rounded-3xl backface-hidden flex flex-col justify-center items-center bg-gradient-to-b from-purple-400 to-pink-300 text-white text-center px-6 select-none">
+     <h1 class="font-pacifico text-6xl sm:text-7xl drop-shadow-md leading-tight">
+      Happy Birthday,
+      <br/>
+      Isyana!
+     </h1>
+     <p class="mt-8 text-xl sm:text-2xl font-semibold drop-shadow-sm">
+      Klik untuk membuka kartu
+     </p>
+     <img alt="Gambar kue ulang tahun dengan lilin menyala dan dekorasi warna-warni" class="mt-10 w-48 h-48 object-contain select-none pointer-events-none" decoding="async" draggable="false" height="150" loading="lazy" src="https://storage.googleapis.com/a1aa/image/da605883-a0f6-4534-ce53-30399d0d7997.jpg" width="150"/>
+    </article>
+    <article class="absolute w-full h-full rounded-3xl backface-hidden bg-gray-50 text-gray-800 p-10 flex flex-col justify-between transform rotate-y-180">
+     <div aria-label="Pesan ulang tahun" class="overflow-y-auto max-h-[75%] text-lg sm:text-xl leading-relaxed scroll-smooth pr-2" tabindex="0">
+      <p>
+       Halo Isyana,
+      </p>
+      <p class="mt-4">
+       Selamat ulang tahun! Semoga hari spesialmu ini dipenuhi kebahagiaan,
+            cinta, dan tawa. Aku berharap semua impian dan harapanmu menjadi
+            kenyataan di tahun ini. Teruslah bersinar dengan bakat dan pesonamu
+            yang luar biasa!
+      </p>
+      <p class="mt-4">
+       Semoga sehat selalu, sukses dalam setiap langkah, dan selalu
+            dikelilingi oleh orang-orang yang menyayangimu. Nikmati setiap momen
+            hari ini!
+      </p>
+     </div>
+     <footer aria-label="Tanda tangan pengirim" class="font-pacifico text-3xl sm:text-4xl text-right text-pink-500 select-text">
+      Dari Pengagum Rahasiamu
+     </footer>
+    </article>
+   </section>
+  </main>
+  <script>
+   (() => {
+      const card = document.getElementById("birthdayCard");
+      let isOpen = false;
+
+      // Confetti colors classes
+      const confettiColors = [
+        "confetti-yellow",
+        "confetti-red",
+        "confetti-blue",
+        "confetti-green",
+        "confetti-purple",
+      ];
+
+      // Accessibility: toggle on Enter or Space key
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleCard();
+        }
+      });
+
+      card.addEventListener("click", toggleCard);
+
+      function toggleCard() {
+        isOpen = !isOpen;
+        card.setAttribute("aria-pressed", isOpen.toString());
+        if (isOpen) {
+          card.classList.add("rotate-y-180");
+          createConfetti();
+        } else {
+          card.classList.remove("rotate-y-180");
+        }
+      }
+
+      // Add rotate-y-180 utility class dynamically
+      const styleSheet = document.createElement("style");
+      styleSheet.textContent = `
+        .rotate-y-180 {
+          transform: rotateY(180deg);
+        }
+      `;
+      document.head.appendChild(styleSheet);
+
+      function createConfetti() {
+        const numConfetti = 80; // Increased confetti count for larger card
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        for (let i = 0; i < numConfetti; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+
+          // Assign color class cycling through colors
+          confetti.classList.add(confettiColors[i % confettiColors.length]);
+
+          // Random start position (x: 0 to vw, y: slightly above viewport)
+          const startX = Math.random() * vw;
+          const startY = -10 - Math.random() * 20;
+
+          // Random end position (x: +/- 150px from startX, y: vh + 30) - adjusted for larger spread
+          const endX = startX + (Math.random() * 300 - 150);
+          const endY = vh + 30;
+
+          confetti.style.setProperty("--start-x", `${startX}px`);
+          confetti.style.setProperty("--start-y", `${startY}px`);
+          confetti.style.setProperty("--end-x", `${endX}px`);
+          confetti.style.setProperty("--end-y", `${endY}px`);
+
+          confetti.style.left = `${startX}px`;
+          confetti.style.top = `${startY}px`;
+
+          // Random animation duration between 3s and 5s - adjusted for longer fall
+          const duration = 3 + Math.random() * 2;
+          confetti.style.animation = `confetti-fall ${duration}s ease-out forwards`;
+
+          // Random animation delay up to 0.7s - adjusted for more staggered appearance
+          confetti.style.animationDelay = `${Math.random() * 0.7}s`;
+
+          document.body.appendChild(confetti);
+
+          confetti.addEventListener("animationend", () => {
+            confetti.remove();
+          });
+        }
+      }
+    })();
+  </script>
+ </body>
+</html>
